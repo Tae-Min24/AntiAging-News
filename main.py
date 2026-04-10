@@ -37,7 +37,7 @@ def send_email(content):
     msg['Subject'] = "[Daily Anti-Aging Update] ข้อมูลวิจัยและโอกาสธุรกิจประจำวัน"
     msg.attach(MIMEText(content, 'plain'))
 
-    with smtplib.SMTP_ACCOUNT('smtp.gmail.com', 587) as server:
+    with smtplib.SMTP('smtp.gmail.com', 587) as server:
         server.starttls()
         server.login(msg['From'], os.environ["GMAIL_PASSWORD"])
         server.send_message(msg)
