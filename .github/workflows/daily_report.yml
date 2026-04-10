@@ -1,0 +1,23 @@
+name: Daily Anti-Aging Report
+on:
+  schedule:
+    - cron: '0 1 * * *' # ตั้งเวลา 08:00 น. ของประเทศไทย (01:00 UTC)
+  workflow_dispatch: # ปุ่มกดให้ทำงานทันทีเพื่อทดสอบ
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: |
+          pip install feedparser anthropic
+      - name: Run script
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+        run: python main.py
